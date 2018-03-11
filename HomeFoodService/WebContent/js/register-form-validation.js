@@ -16,11 +16,16 @@ $(document).ready(function() {
 				required: true,
 				email: true
 			},
-			password: "required",
-		    minlength: 6,
-		    password_again: {
-		      equalTo: "#password"
-		    },
+
+		    password: {
+	            required: true,
+	            minlength: 6
+	        },
+	        password_confirm: {
+	            required: true,
+	            minlength: 6,
+	            equalTo: "#password"
+	        },
 			phone: {
 				required: true,
 				number: true
@@ -69,19 +74,18 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
+
 	$("#pwdChange").validate({
 		rules: {
-		    password: {
-		    	required: true,
-		    	minlength: 6
-		    },
+			password: {
+		            required: true,
+		            minlength: 6
+		        },
 		    password_again: {
-		    	required: true,
-		    	minlength: 6,
-		    	equalTo: "#password"
-		    }
+		            required: true,
+		            minlength: 6,
+		            equalTo: "#password"
+		        }
 		  }
-	});
-	
-});
+		});
+});	

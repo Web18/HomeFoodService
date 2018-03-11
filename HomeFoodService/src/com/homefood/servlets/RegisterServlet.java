@@ -1,4 +1,4 @@
-package servlets;
+package com.homefood.servlets;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.CustomerDAO;
-import model.PasswordEncryptionService;
-import beans.CustomerBean;
+import com.homefood.beans.ClientBean;
+import com.homefood.util.ClientDAO;
+import com.homefood.util.PasswordEncryptionService;
 
 public class RegisterServlet extends HttpServlet {
 
@@ -21,7 +21,7 @@ public class RegisterServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		
-		CustomerBean customer;
+		ClientBean customer;
 		String subscribed;
 		
 		if(request.getParameter("subscribed") != null)
@@ -30,39 +30,34 @@ public class RegisterServlet extends HttpServlet {
 			subscribed = "no";
 		
 		String password = request.getParameter("password");
-		byte[] encryptedPwd = null;
+		byte[] encryptedPass = null;
         byte[] salt = null;
         
 		try {
 			salt = pw.generateSalt();
-			encryptedPwd = pw.getEncryptedPassword(password, salt);
+			encryptedPass = pw.getEncryptedPassword(password, salt);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
-		
-		
-		customer = new CustomerBean(
-				encryptedPwd,
+			
+		customer = new ClientBean(
+				encryptedPass,
 				salt,
 				request.getParameter("firstname"),
 				request.getParameter("lastname"),
 				request.getParameter("email"),
 				request.getParameter("phone"),
-				request.getParameter("phone2"),
 				subscribed
 				);
-		
-		if(CustomerDAO.register(customer) > 0){
-			request.setAttribute("successMessage", "Registration successful. You can sign in now.");
+		//Display Error messages 
+		if(ClientDAO.register(customer) > 0){
+			request.setAttribute("successMessage", "Registration successful.You are ready to log in now.");
             RequestDispatcher rd=request.getRequestDispatcher("login.jsp");    
             rd.include(request,response); 
 		} else {
-			request.setAttribute("errorMessage", "Unable to register. Please check your info and try submitting again.");   
+			request.setAttribute("errorMessage", "Unable to register. Please check your info.");   
             RequestDispatcher rd=request.getRequestDispatcher("register.jsp");    
             rd.include(request,response); 
 		}

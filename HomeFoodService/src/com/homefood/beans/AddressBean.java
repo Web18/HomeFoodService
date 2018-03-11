@@ -1,4 +1,4 @@
-package beans;
+package com.homefood.beans;
 
 public class AddressBean {
 
@@ -13,24 +13,28 @@ public class AddressBean {
 	private String buzzerNumber;
 	private String customerId;
 	
-	public AddressBean(){};
+	//Default Constructor
+	public AddressBean(){
+		
+	};
 	
 	public AddressBean(String id, String alias, String address1,
 			String address2, String city, String province, String postalCode,
 			String phone, String buzzerNumber, String customerId) {
 		super();
 		this.id = id;
+		this.customerId = customerId;
 		this.alias = alias;
 		this.address1 = address1;
 		this.address2 = address2;
 		this.city = city;
 		this.province = province;
 		this.postalCode = postalCode;
-		this.phone = phone;
 		this.buzzerNumber = buzzerNumber;
-		this.customerId = customerId;
+		this.phone = phone;		
 	}
-
+	
+	//Setter and Getter for all Address proparties 
 	public String getId() {
 		return id;
 	}
@@ -63,13 +67,7 @@ public class AddressBean {
 		this.address2 = address2;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
+	
 
 	public String getProvince() {
 		return province;
@@ -86,7 +84,22 @@ public class AddressBean {
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
+	
+	public String getCustomerId() {
+		return customerId;
+	}
 
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
 	public String getPhone() {
 		return phone;
 	}
@@ -101,16 +114,6 @@ public class AddressBean {
 
 	public void setBuzzerNumber(String buzzerNumber) {
 		this.buzzerNumber = buzzerNumber;
-	}
-
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
-	}
-	
-	
+	}	
 	
 }

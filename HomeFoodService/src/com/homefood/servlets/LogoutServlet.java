@@ -1,4 +1,4 @@
-package servlets;
+package com.homefood.servlets;
 
 import java.io.IOException;
 

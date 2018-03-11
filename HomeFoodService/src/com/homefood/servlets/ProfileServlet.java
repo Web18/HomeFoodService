@@ -1,4 +1,4 @@
-package servlets;
+package com.homefood.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.CustomerDAO;
+import com.homefood.util.ClientDAO;
 
 
 public class ProfileServlet extends HttpServlet {
@@ -25,10 +25,14 @@ public class ProfileServlet extends HttpServlet {
         System.out.println(control+"    "+customerId);
 		if(control.equals("pwd")){
 			String pwd1 = request.getParameter("password");
-
-			if(CustomerDAO.setCustomerPwd(pwd1, customerId)){
-				out.print("<p>Password changed successfully.</p>");    
-				RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
+			String pwd2 = request.getParameter("password_again");
+			
+			 System.out.println("The new pass is:    "+ pwd1); //Just for debugging 
+			 System.out.println("The confirm pass is:    "+ pwd2); //Just for debugging 
+			 
+			if(ClientDAO.setCustomerPwd(pwd1, customerId)){
+				request.setAttribute("successMessage", "Password changed successfully.");
+	            RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
 				rd.include(request,response); 
 			} else {
 				out.print("<p>Unable to change password.</p>");    
@@ -38,8 +42,8 @@ public class ProfileServlet extends HttpServlet {
 		}
 		if(control.equals("profile")){
 			String email = request.getParameter("email");
-			String fname = request.getParameter("firstname");
-			String lname = request.getParameter("lastname");
+			String firstname = request.getParameter("firstname");
+			String lastname = request.getParameter("lastname");
 			String phone = request.getParameter("phone");
 			String phone2 = request.getParameter("phone2");
 			String subscribed;
@@ -47,9 +51,9 @@ public class ProfileServlet extends HttpServlet {
 				subscribed = "yes";
 			else
 				subscribed = "no";
-			if(CustomerDAO.setCustomerProfile(fname, lname, email, phone, phone2, subscribed, customerId)){
-				out.print("<p>Profile Update was successful.</p>");    
-				RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
+			if(ClientDAO.setCustomerProfile(firstname, lastname, email, phone, phone2, subscribed, customerId)){
+				request.setAttribute("successMessage", "Profile Update successfully.");
+				RequestDispatcher rd=request.getRequestDispatcher("login.jsp");    
 				rd.include(request,response); 
 			} else {
 				out.print("<p>Unable to update profile.</p>");    
@@ -67,7 +71,7 @@ public class ProfileServlet extends HttpServlet {
 				String postal_code = request.getParameter("postalcode");
 				String phone = request.getParameter("phone");
 				String buzzer = request.getParameter("buzzer");
-				if(CustomerDAO.setCustomerAddress(address1, address2, city, province, postal_code, buzzer, phone, customerId, addressId)){
+				if(ClientDAO.setCustomerAddress(address1, address2, city, province, postal_code, buzzer, phone, customerId, addressId)){
 					out.print("<p>Address changed successfully.</p>");    
 					RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
 					rd.include(request,response); 
@@ -79,7 +83,7 @@ public class ProfileServlet extends HttpServlet {
 			}
 			else if(request.getParameter("submit").equals("Delete")){
 				String addressId = request.getParameter("selectaddress");
-				if(CustomerDAO.deleteAddress(addressId) > 0){
+				if(ClientDAO.deleteAddress(addressId) > 0){
 					out.print("<p>Address deleted.</p>");    
 					RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
 					rd.include(request,response);

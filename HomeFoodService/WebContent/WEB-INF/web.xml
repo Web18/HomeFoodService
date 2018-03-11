@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet>
     <servlet-name>login</servlet-name>
-    <servlet-class>servlets.LoginServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>login</servlet-name>
@@ -10,7 +10,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>logout</servlet-name>
-    <servlet-class>servlets.LogoutServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>logout</servlet-name>
@@ -18,7 +18,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>register</servlet-name>
-    <servlet-class>servlets.RegisterServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.RegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>register</servlet-name>
@@ -30,7 +30,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>checkout</servlet-name>
-    <servlet-class>servlets.CheckoutServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.CheckoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>profileChange</servlet-name>
@@ -38,7 +38,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>profileChange</servlet-name>
-    <servlet-class>servlets.ProfileServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.ProfileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>pwdChange</servlet-name>
@@ -46,7 +46,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>pwdChange</servlet-name>
-    <servlet-class>servlets.ProfileServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.ProfileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>changeAddress</servlet-name>
@@ -54,9 +54,37 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>changeAddress</servlet-name>
-    <servlet-class>servlets.ProfileServlet</servlet-class>
+    <servlet-class>com.homefood.servlets.ProfileServlet</servlet-class>
   </servlet>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  
+  
+  <display-name>EmailSendingWebApp</display-name>
+ 
+    <!-- SMTP settings -->
+    <context-param>
+        <param-name>host</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>587</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>user</param-name>
+        <param-value>homefood.info@gmail.com</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>pass</param-name>
+        <param-value>Doublehan</param-value>
+    </context-param>
+ 
+    <welcome-file-list>
+        <welcome-file>contact.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

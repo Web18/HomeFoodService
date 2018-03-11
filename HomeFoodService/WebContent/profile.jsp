@@ -13,15 +13,22 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" />
-<fmt:setBundle basename="languageResources.text" />
+<fmt:setBundle basename="com.homefood.languageResources.text" />
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
+<!-- Style Links -->
+<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap-3.3.4/style/style.css">
+<script src="js/jquery-1.11.2.min.js"></script>
+<script src="bootstrap-3.3.4/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="bootstrap-3.3.4/css/bootstrap-theme.min.css">
+
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><fmt:message key="profile.label.userProfile" /></title>
-<t:headcontents></t:headcontents>
 <script src="js/jquery.validate.min.js"> </script>
 <script src="js/register-form-validation.js"> </script>
 <c:set var="locale" value="${language}"/>
@@ -71,8 +78,7 @@ $(document).ready(function(){
     </c:if> 
 </head>
 <body>
-<t:header></t:header>
-		
+<t:header></t:header>		
 <div class="container container-style">
     <div class="row">
         <div class="col-md-3 profile-menu vert-menu-style panel panel-primary">
@@ -85,9 +91,6 @@ $(document).ready(function(){
                 <li><a href="#" class="showContent" id="address"><fmt:message key="profile.button.addressBook" /></a></li>
             </ul>
         </div>
-        <%
-        	//customer = CustomerDAO.getCustomer(session.getAttribute("id").toString());
-        %>
 
         <div style="display:none" id="profileForm" class="col-md-9">
         	<h3><fmt:message key="profile.label.updateProfile" /></h3>

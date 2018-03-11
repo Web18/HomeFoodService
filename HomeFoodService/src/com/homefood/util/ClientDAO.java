@@ -1,4 +1,4 @@
-package model;
+package com.homefood.util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,16 +7,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import beans.AddressBean;
-import beans.CustomerBean;
-import model.DataManager;
+import com.homefood.beans.AddressBean;
+import com.homefood.beans.ClientBean;
+import com.homefood.util.DataManager;
 
-public class CustomerDAO {
+public class ClientDAO {
 
 	//boolean status = false;  
 	private static Connection conn = null;  
 	private static PreparedStatement pst = null;
-	private static CustomerBean customer ;
+	private static ClientBean client ;
 	
 	public static boolean login(String email, String password){
 		ResultSet rs = null;
@@ -67,7 +67,7 @@ public class CustomerDAO {
 	}
 
 
-	public static int register(CustomerBean customer){	
+	public static int register(ClientBean client){	
 		int status = 0;
 		try {  
 			//Class.forName(driver).newInstance();  
@@ -76,17 +76,16 @@ public class CustomerDAO {
 			pst = conn.prepareStatement(""
 					+ "INSERT INTO customer ("
 					+ "first_name, last_name, phone, "
-					+ "phone2, email, password, salt, subscribed)"
-					+ "VALUES (? , ? , ? , ? , ? , ?, ?, ?)");
+					+ "email, password, salt, subscribed)"
+					+ "VALUES (? , ? , ? , ? , ?, ?, ?)");
 
-			pst.setString(1, customer.getFirstName());  
-			pst.setString(2, customer.getLastName());
-			pst.setString(3, customer.getPhone());
-			pst.setString(4, customer.getPhone2());
-			pst.setString(5, customer.getEmail());
-			pst.setBytes(6, customer.getPassword());
-			pst.setBytes(7, customer.getSalt());
-			pst.setString(8, customer.getSubscribed());
+			pst.setString(1, client.getFirstName());  
+			pst.setString(2, client.getLastName());
+			pst.setString(3, client.getPhone());
+			pst.setString(4, client.getEmail());
+			pst.setBytes(5, client.getPassword());
+			pst.setBytes(6, client.getSalt());
+			pst.setString(7, client.getSubscribed());
 
 			System.out.println(pst);
 
@@ -229,30 +228,29 @@ public class CustomerDAO {
 	}
 
 
-	public static CustomerBean getCustomer(String email){
+	public static ClientBean getCustomer(String email){
 		ResultSet rs = null;
 
 		try {  
 			conn = new DataManager().getConnection();
 			pst = conn.prepareStatement(""
-					+ "SELECT id, first_name , last_name , phone, phone2, "
+					+ "SELECT id, first_name , last_name , phone, "
 					+ "email, password, salt, subscribed "
 					+ "FROM customer WHERE email = '"+email+"'");
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
-				customer = new CustomerBean(
+				client = new ClientBean(
 						rs.getBytes("password"),
 						rs.getBytes("salt"),
 						rs.getString("first_name"), 
 						rs.getString("last_name"),
 						rs.getString("email"), 
 						rs.getString("phone"), 
-						rs.getString("phone2"),
 						rs.getString("subscribed")
 						);
-				customer.setId(rs.getString("id"));
-				customer.setAddresses(getCustomerAddresses(rs.getString("id")));
+				client.setId(rs.getString("id"));
+				client.setAddresses(getCustomerAddresses(rs.getString("id")));
 			}
 
 		} catch (Exception e) {  
@@ -280,7 +278,7 @@ public class CustomerDAO {
 				}  
 			}  
 		}  
-		return customer;
+		return client;
 	}
 
 	public static boolean setCustomerPwd(String pwd, String id){
@@ -288,10 +286,9 @@ public class CustomerDAO {
 
 		try {  
 			conn = new DataManager().getConnection();
-			pst = conn.prepareStatement(""
-					+ "UPDATE customer SET password = "+pwd
-					+ " WHERE customer.id = "+id);
-
+			pst = conn.prepareStatement("UPDATE customer SET password = ? WHERE customer.id = ?");
+			pst.setString(1, pwd);
+			pst.setString(2, id);
 			rs = pst.executeUpdate();
 
 		} catch (Exception e) {  

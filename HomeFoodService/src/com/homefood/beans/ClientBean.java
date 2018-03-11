@@ -1,36 +1,34 @@
-package beans;
+package com.homefood.beans;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 
-public class CustomerBean
+public class ClientBean
 {
 	private String id;
-    private byte[] password;    //Password    
-    private byte[] salt;    	//Salt 
-    private String firstName;   //First Name
-    private String lastName;    //Last Name
-    private String email;       //Email
-    private String phone;    	//Phone number
-    private String phone2;    	//Phone number 2
+    private byte[] password;      
+    private byte[] salt;    	
+    private String firstName;  
+    private String lastName;    
+    private String email;       
+    private String phone;    	
     private String subscribed;
     private ArrayList<AddressBean> addresses;
     
     private JSONArray addressesJSON; 
 
-	public CustomerBean(){
+	public ClientBean(){
     }
     
-	public CustomerBean(byte[] password, byte[] salt, String firstName, String lastName, String email,
-			String phone, String phone2, String subscribed) {
+	public ClientBean(byte[] password, byte[] salt, String firstName, String lastName, String email,
+			String phone,String subscribed) {
 		this.password = password;
 		this.setSalt(salt);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.phone = phone;
-		this.phone2 = phone2;
 		this.subscribed = subscribed;
 	}
 	
@@ -89,21 +87,17 @@ public class CustomerBean
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	public String getPhone2() {
-		return phone2;
-	}
-
-	public void setPhone2(String phone2) {
-		this.phone2 = phone2;
-	}
-
+	
 	public String getSubscribed() {
 		return subscribed;
 	}
 
 	public void setSubscribed(String subscribed) {
 		this.subscribed = subscribed;
+	}
+	public String getAddressesJSON(String id){
+		addressesJSON = new JSONArray(addresses);
+		return addressesJSON.toString();
 	}
 
 	public ArrayList<AddressBean> getAddresses() {
@@ -114,18 +108,5 @@ public class CustomerBean
 		this.addresses = addresses;
 	}
 	
-	public String getAddressesJSON(String id){
-		addressesJSON = new JSONArray(addresses);
-		return addressesJSON.toString();
-	}
-
-//	@Override
-//	public String toString() {
-//		return "CustomerBean [password=" + password + ", firstName="
-//				+ firstName + ", lastName=" + lastName + ", email=" + email
-//				+ ", phone=" + phone + ", phone2=" + phone2 + ", subscribed="
-//				+ subscribed + "]";
-//	}
-
 	
 }

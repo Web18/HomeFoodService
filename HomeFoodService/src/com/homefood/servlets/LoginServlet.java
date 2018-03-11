@@ -1,4 +1,4 @@
-package servlets;
+package com.homefood.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import beans.CustomerBean;
-import model.CustomerDAO;
+import com.homefood.beans.ClientBean;
+import com.homefood.util.ClientDAO;
 
 public class LoginServlet extends HttpServlet {
 
@@ -25,8 +25,8 @@ public class LoginServlet extends HttpServlet {
              
         HttpSession session = request.getSession(false);
   
-        if(CustomerDAO.login(email, password)){
-        	CustomerBean customer = CustomerDAO.getCustomer(email);
+        if(ClientDAO.login(email, password)){
+        	ClientBean customer = ClientDAO.getCustomer(email);
         	System.out.println(customer.toString());
         	if(session!=null){
 	        	session.setAttribute("id", customer.getId());
@@ -44,8 +44,8 @@ public class LoginServlet extends HttpServlet {
         	  
         }    
         else{    
-            out.print("<p style=\"color:red\">Sorry username or password error</p>"); 
-            request.setAttribute("errorMessage", "Username or password incorrect.");
+            out.print("<p style=\"color:red\">Sorry username or password error, Please try again</p>"); 
+            request.setAttribute("errorMessage", "Username or password incorrect,Please try again");
             request.getRequestDispatcher("login.jsp").forward(request, response);   
         }    
   
