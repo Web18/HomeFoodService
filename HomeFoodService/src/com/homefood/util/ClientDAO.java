@@ -13,7 +13,6 @@ import com.homefood.util.DataManager;
 
 public class ClientDAO {
 
-	//boolean status = false;  
 	private static Connection conn = null;  
 	private static PreparedStatement pst = null;
 	private static ClientBean client ;
@@ -33,9 +32,12 @@ public class ClientDAO {
 			while(rs.next()){
 				if(pw.authenticate(password, rs.getBytes("password"), rs.getBytes("salt"))){
 					status = true;
+					System.out.print("I am working!");
 				} else {
 					status = false;
+					System.out.print("I am not working!");
 				}
+				System.out.println(password);
 			}
 
 		} catch (Exception e) {  
@@ -70,7 +72,6 @@ public class ClientDAO {
 	public static int register(ClientBean client){	
 		int status = 0;
 		try {  
-			//Class.forName(driver).newInstance();  
 			conn = new DataManager().getConnection();
 
 			pst = conn.prepareStatement(""
@@ -280,56 +281,56 @@ public class ClientDAO {
 		}  
 		return client;
 	}
-
-	public static boolean setCustomerPwd(String pwd, String id){
+	public static boolean setCustomerPass(ClientBean client, String id){
 		int rs = 0;
-
 		try {  
-			conn = new DataManager().getConnection();
-			pst = conn.prepareStatement("UPDATE customer SET password = ? WHERE customer.id = ?");
-			pst.setString(1, pwd);
-			pst.setString(2, id);
-			rs = pst.executeUpdate();
+		conn = new DataManager().getConnection();
+		pst = conn.prepareStatement("UPDATE customer SET password = ?, salt = ?  WHERE customer.id = ?");
 
-		} catch (Exception e) {  
-			System.out.println(e);  
-		} finally {  
-			if (conn != null) {  
-				try {  
-					conn.close();  
-				} catch (SQLException e) {  
-					e.printStackTrace();  
-				}  
+		pst.setBytes(1, client.getPassword());
+		pst.setBytes(2, client.getSalt());
+		pst.setString(3, id);
+		rs = pst.executeUpdate();
+		System.out.println(pst);
+		
+	} catch (Exception e) {  
+		System.out.println(e);  
+	} finally {  
+		if (conn != null) {  
+			try {  
+				conn.close();  
+			} catch (SQLException e) {  
+				e.printStackTrace();  
 			}  
-			if (pst != null) {  
-				try {  
-					pst.close();  
-				} catch (SQLException e) {  
-					e.printStackTrace();  
-				}  
-			}  
-			
 		}  
+		if (pst != null) {  
+			try {  
+				pst.close();  
+			} catch (SQLException e) {  
+				e.printStackTrace();  
+			}  
+		}  
+		
+	}  
 
-		return (rs != 0? true:false);
+	return (rs != 0? true:false);
+
 	}
-
+	
 	public static boolean setCustomerProfile(String firstName, String lastName, 
-			String email, String phone, String phone2, String subscribed, String id){
+			String email, String phone, String subscribed, String id){
 		int rs = 0;
 
 		try {  
 			conn = new DataManager().getConnection();
-			pst = conn.prepareStatement("UPDATE customer SET first_name = ? , last_name = ? , phone = ? "
-					+ " , phone2 = ? , subscribed = ? , email = ? WHERE customer.id = ? ");
+			pst = conn.prepareStatement("UPDATE customer SET first_name = ? , last_name = ? , phone = ?, subscribed = ? , email = ? WHERE customer.id = ? ");
 
 			pst.setString(1, firstName);
 			pst.setString(2, lastName);
 			pst.setString(3, phone);
-			pst.setString(4, phone2);
-			pst.setString(5, subscribed);
-			pst.setString(6, email);
-			pst.setInt(7, Integer.parseInt(id));
+			pst.setString(4, subscribed);
+			pst.setString(5, email);
+			pst.setInt(6, Integer.parseInt(id));
 			rs = pst.executeUpdate();
 
 		} catch (Exception e) {  
@@ -351,7 +352,6 @@ public class ClientDAO {
 			}  
 
 		}  
-
 		return (rs != 0? true:false);
 	}
 

@@ -51,7 +51,7 @@
 	<h1 style="color:red;"><fmt:message key="register.title" /></h1>
 	<hr>
 	<h3><fmt:message key="register.information" /></h3>
-	<form action="register" method="post" id="register_form">
+	<form action="register" method="post" id="registeration">
 	  <div class="form-group">
 	    <label for="firstname"><fmt:message key="register.firstName" /></label>
 	    <input name="firstname" class="form-control" id="firstname" placeholder="<fmt:message key="register.firstName.placeholder" />">

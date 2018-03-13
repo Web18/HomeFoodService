@@ -36,8 +36,9 @@
     <script src="js/messages_fr.js" type="text/javascript"> </script>
 </c:if> 
 
-<script>
 
+
+<script>
 $(document).ready(function(){
 	$("#profileForm").css('display', 'block');
 	$(".showContent").click(function(event){
@@ -78,8 +79,15 @@ $(document).ready(function(){
     </c:if> 
 </head>
 <body>
+
 <t:header></t:header>		
 <div class="container container-style">
+
+<!-- Display Error messages -->
+	<% if(request.getAttribute("errorMessage") != null) { %>
+	<div class="alert alert-danger" role="alert">${errorMessage}</div>
+	<% } %>
+	
     <div class="row">
         <div class="col-md-3 profile-menu vert-menu-style panel panel-primary">
         	<div class="panel-heading">
@@ -94,7 +102,9 @@ $(document).ready(function(){
 
         <div style="display:none" id="profileForm" class="col-md-9">
         	<h3><fmt:message key="profile.label.updateProfile" /></h3>
-				<form action="profileChange" id="profileChange" method="post">
+        	
+        	<!--------------- Edit profile form --------------->
+				<form action="profileChange" id="change_profile" method="post">
 					<div class="form-group">
 						<label for="firstname"><fmt:message key="profile.label.firstName" /></label> <input name="firstname"
 							class="form-control" id="firstname"
@@ -114,12 +124,6 @@ $(document).ready(function(){
 							class="form-control" id="profile_phone"
 							value="">
 					</div>
-					<div class="form-group">
-						<label for="phone2"><fmt:message key="profile.label.phone2" /></label> <input name="phone2"
-							class="form-control" id="profile_phone2"
-							value="">
-					</div>
-
 					<div class="checkbox">
 						<label> <input type="checkbox" name="subscribed"
 							value="subscribe" checked> <fmt:message key="profile.label.subscribed" />
@@ -130,27 +134,34 @@ $(document).ready(function(){
 					<button type="submit" class="btn btn-primary pull-right"><fmt:message key="profile.button.update" /></button>
 				</form>
 
-			</div > <!-- END PROFILE FROM --> 
+			</div > 
+			<!--------------- End profile form --------------->
 			
         <div style="display:none" id="pwdForm" class="col-md-9" >
         <h3><fmt:message key="profile.button.changePassword" /></h3>
-				<form action="pwdChange" id="pwdChange" method="post">
+        
+        <!--------------- Edit password form --------------->
+        <!-- I removed id = "pwdChange" to not apply validation for password change until fix it  --> 
+				<form action="pwdChange" id="" method="post">
 					<div class="form-group">
 						<label for="password"><fmt:message key="profile.label.password" /></label> 
-						<input type="password" name="password" class="form-control" id="password" placeholder="<fmt:message key="profile.textbox.enterPassword" />">
+						<input type="password" name="password" class="form-control" id="password" placeholder="<fmt:message key="profile.textbox.enterPassword" />" required >
 					</div>
 					<div class="form-group">
 						<label for="password-conf"><fmt:message key="profile.label.confPassword" /></label> 
-						<input type="password" name="password_again" class="form-control" id="password_again" placeholder="<fmt:message key="profile.textbox.confPassword"/>">
+						<input type="password" name="password_again" class="form-control" id="password_again" placeholder="<fmt:message key="profile.textbox.confPassword"/>" required  onkeyup='check();'>
 						<input name= "control" type="hidden" value="pwd">
 					</div>
-					
 					<button type="submit" class="btn btn-primary pull-right"><fmt:message key="profile.button.change" /></button>
 				</form>
-			</div>   <!-- END PWD FROM -->
-
+			</div>   
+        <!--------------- End password form --------------->
+        
 			<div style="display:none" id="addressForm" class="col-md-9" >
 				<h3><fmt:message key="profile.label.manageAddresses" /></h3>
+				
+				        <!--------------- Edit Address form --------------->
+
 				<form action="changeAddress" id="changeAddress" method="post">
 					<div class="form-group">
 						<label for="selectaddress"><fmt:message key="profile.label.selectAddresses" /></label>
@@ -199,7 +210,8 @@ $(document).ready(function(){
 					<input type="submit" class="btn btn-primary pull-right" name="submit" value="<fmt:message key="profile.button.update" />" style="margin-left: 5px;">
 					<input type="submit" class="btn btn-default pull-right" name="submit" value="<fmt:message key="profile.button.delete" />">
 				</form>
-			</div> <!-- END ADDRESS FROM -->  
+			</div> 
+        <!--------------- End Address form --------------->
     </div>
 </div>
 

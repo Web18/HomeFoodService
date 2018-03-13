@@ -31,6 +31,11 @@ public class ClientBean
 		this.phone = phone;
 		this.subscribed = subscribed;
 	}
+	public ClientBean(byte[] password, byte[] salt) {
+		this.password = password;
+		this.setSalt(salt);
+	}
+	
 	
     public String getId() {
 		return id;
