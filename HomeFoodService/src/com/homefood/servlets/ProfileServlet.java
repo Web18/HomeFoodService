@@ -1,7 +1,6 @@
 package com.homefood.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -23,20 +22,19 @@ public class ProfileServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
-		PrintWriter out = response.getWriter();
-
 		String control = request.getParameter("control");
 		String customerId = request.getSession().getAttribute("id").toString();
         System.out.println(control+"    "+customerId);
         
-        
+      /**
+       * Change password   
+       */
 		if(control.equals("pwd")){			
 			ClientBean customer;
 			byte[] encryptedPass = null;
 	        byte[] salt = null;
 	        
 			String pwd1 = request.getParameter("password");
-			String pwd2 = request.getParameter("password_again");
 			try {
 				salt = pw.generateSalt();
 				encryptedPass = pw.getEncryptedPassword(pwd1, salt);
@@ -49,24 +47,23 @@ public class ProfileServlet extends HttpServlet {
 					encryptedPass,
 					salt				
 					);
-			 System.out.println("The new pass is:    "+ pwd1); //Just for debugging 
-			 System.out.println("The confirm pass is:    "+ pwd2); //Just for debugging 
-			 
 			if(ClientDAO.setCustomerPass(customer,customerId)){
-				request.setAttribute("successMessage", "Password changed successfully.");
-
+				request.setAttribute("successMessage", "Password changed successfully."); 
 				response.setHeader("Cache-Control", "no-cache, no-store");
 				response.setHeader("Pragma", "no-cache");
+
 				request.getSession().invalidate();
-				response.sendRedirect(request.getContextPath() + "/login.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("login.jsp");    
+		        rd.include(request,response); 
 			} else {
-				out.print("<p>Unable to change password.</p>");    
+				request.setAttribute("errorMessage", "Unable to change password."); 
 				RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
-				rd.include(request,response);
+				rd.include(request,response); 
 			}
 		}
-		
-		
+		/**
+		 * Edit profile		
+		 */
 		if(control.equals("profile")){
 			String email = request.getParameter("email");
 			String firstname = request.getParameter("firstname");
@@ -78,49 +75,19 @@ public class ProfileServlet extends HttpServlet {
 			else
 				subscribed = "no";
 			if(ClientDAO.setCustomerProfile(firstname, lastname, email, phone, subscribed, customerId)){
-				request.setAttribute("successMessage", "Profile Update successfully."); 
-				/** TODO: Check success messages and error messages*/
 				
+				request.setAttribute("successMessage", "Profile Update successfully."); 
 				response.setHeader("Cache-Control", "no-cache, no-store");
 				response.setHeader("Pragma", "no-cache");
+
 				request.getSession().invalidate();
-				response.sendRedirect(request.getContextPath() + "/login.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("login.jsp");    
+		        rd.include(request,response); 
 			
 			} else {
-				out.print("<p>Unable to update profile.</p>");    
+				request.setAttribute("errorMessage", "Unable to update profile."); 
 				RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
 				rd.include(request,response); 
-			}
-		}
-     
-        //Change address process
-		if(control.equals("address")){
-			if(request.getParameter("submit").equals("Update")){
-				String addressId = request.getParameter("selectaddress");
-				String address1 = request.getParameter("address1");
-				String address2 = request.getParameter("address2");
-				String city = request.getParameter("city");
-				String province = request.getParameter("province");
-				String postal_code = request.getParameter("postalcode");
-				String phone = request.getParameter("phone");
-				String buzzer = request.getParameter("buzzer");
-				if(ClientDAO.setCustomerAddress(address1, address2, city, province, postal_code, buzzer, phone, customerId, addressId)){
-					out.print("<p>Address changed successfully.</p>");    
-					RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
-					rd.include(request,response); 
-				} else {
-					out.print("<p>Unable to change address.</p>");    
-					RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
-					rd.include(request,response);
-				}
-			}
-			else if(request.getParameter("submit").equals("Delete")){
-				String addressId = request.getParameter("selectaddress");
-				if(ClientDAO.deleteAddress(addressId) > 0){
-					out.print("<p>Address deleted.</p>");    
-					RequestDispatcher rd=request.getRequestDispatcher("profile.jsp");    
-					rd.include(request,response);
-				}
 			}
 		}
 	}

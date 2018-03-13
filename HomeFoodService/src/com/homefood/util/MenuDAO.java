@@ -5,14 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import com.homefood.beans.ProductBean;
 import com.homefood.util.DataManager;
 
 public class MenuDAO {
 	
-	//boolean status = false;  
     private static  Connection conn = null;  
     private static PreparedStatement pst = null;
     private static ArrayList<ProductBean> menu ;
@@ -21,7 +19,6 @@ public class MenuDAO {
 		ResultSet rs = null;
 		
 		try {  
-            //Class.forName(driver).newInstance();  
 			conn = new DataManager().getConnection();
   
 			if(lng.equalsIgnoreCase("en"))
@@ -50,8 +47,6 @@ public class MenuDAO {
                 menu.add(product);
             }
             
-            
-
 		} catch (Exception e) {  
             System.out.println(e);  
         } finally {  
@@ -77,8 +72,6 @@ public class MenuDAO {
                 }  
             }  
         }  
-		if(rs != null)
-			Collections.sort(menu);
 		return menu;
 	}
 

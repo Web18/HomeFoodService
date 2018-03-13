@@ -78,46 +78,9 @@ $(document).ready(function() {
 		    	minlength: 6
 		    },
 		    password_again: {
+		    	required: true,
+		    	minlength: 6
 		    }
 		  }
-	});
-	
-	$("#changeAddress").validate({
-		rules: {
-			address1: {
-				required: true,
-				minlength: 4,
-	    	    maxlength: 25
-			},
-			address2: {
-				minlength: 2,
-	    	    maxlength: 15
-			},
-			city: {
-				required: true,
-				minlength: 2,
-	    	    maxlength: 15
-			},
-			province: {
-				required: true,
-				minlength: 2,
-				maxlength: 15
-			},
-			postalcode: {
-				required: true,
-				minlength: 6,
-				maxlength: 10
-			},
-			phone: {
-				required: true,
-				number: true,
-				minlength: 8,
-				maxlength: 14
-			},
-			buzzer: {
-				minlength: 2,
-				maxlength: 10
-			}
-		}
 	});
 });	

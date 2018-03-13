@@ -50,8 +50,9 @@
 
 <!-- Header Tags -->
 	<t:header></t:header>
-	<div class="container">
-				<%
+	<div class="container-fluid container-style">
+		<div class="row">
+			<div class="col-md-12">				<%
 					//Get the menu Category like Italian or Greek
 					String category = "";
 				    String actMenu = "";
@@ -116,12 +117,13 @@
 						
 					    //Need this to adjust the price button
 					    out.println("    <div class=\"clearfix\"></div>");
-					    out.println("    </div>");
-					    
+					    out.println("    </div>");				    
 					    out.println("</div></div>");
 					}
 				%>				
 						
+				</div>
+				</div>
 				</div>
 	<!-- Footer Tags -->
 	<t:footer></t:footer>

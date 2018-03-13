@@ -43,11 +43,12 @@ public class EmailSendingServlet extends HttpServlet {
         String subject = request.getParameter("name");
         String content = request.getParameter("message");
         try {
-        	//TODO check this display 
             EmailBeans.sendEmail(host, port, user, pass, recipient, email, subject, content);
-            request.setAttribute("successMessage", "The e-mail was sent successfully");
-            RequestDispatcher rd=request.getRequestDispatcher("contact.jsp");    
-            rd.include(request,response); 
+
+			request.setAttribute("successMessage", "The e-mail was sent successfully"); 
+			RequestDispatcher rd=request.getRequestDispatcher("contact.jsp");    
+	        rd.include(request,response); 
+	        
         } catch (Exception ex) {
             ex.printStackTrace();
             request.setAttribute("errorMessage", "Error has been occured while sending your email");   

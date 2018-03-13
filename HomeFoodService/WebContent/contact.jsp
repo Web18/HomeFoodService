@@ -29,6 +29,16 @@
 <!-- Header Tags -->
 <t:header></t:header>
 <div class="container container-style">
+
+<!-- Display Error messages -->
+		<% if(request.getAttribute("errorMessage") != null) { %>
+		<div class="alert alert-danger" role="alert">${errorMessage}</div>
+		<% } %>
+	<!-- Display Success messages -->
+		<% if(request.getAttribute("successMessage") != null) { %>
+		<div class="alert alert-success" role="alert">${successMessage}</div>
+		<% } %>
+			
 <h1 style="color:red;"><fmt:message key="contact.title" /></h1>
 	<hr>
 <form action="EmailSendingServlet" method="post">
