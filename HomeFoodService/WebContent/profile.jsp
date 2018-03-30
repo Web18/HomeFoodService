@@ -69,7 +69,7 @@ $(document).ready(function(){
 	<% } %>
 	
     <div class="row">
-        <div class="col-md-3 profile-menu vert-menu-style panel panel-primary">
+        <div class="col-md-3 profile-menu vert-menu-style panel panel-warning">
         	<div class="panel-heading">
 				<h3 class="panel-title"><fmt:message key="profile.myProfile" /></h3>
 			</div>
@@ -110,7 +110,7 @@ $(document).ready(function(){
 						<input name= "control" type="hidden" value="profile">
 					</div>
 					
-					<button type="submit" class="btn btn-primary pull-right"><fmt:message key="profile.updateProfile" /></button>
+					<button type="submit" class="btn btn-warning pull-right"><fmt:message key="profile.updateProfile" /></button>
 				</form>
 
 			</div > 
@@ -130,7 +130,7 @@ $(document).ready(function(){
 						<input type="password" name="password_again" class="form-control" id="password_again" placeholder="<fmt:message key="profile.confPassword"/>" required>
 						<input name= "control" type="hidden" value="pwd">
 					</div>
-					<button type="submit" class="btn btn-primary pull-right"><fmt:message key="profile.change" /></button>
+					<button type="submit" class="btn btn-warning pull-right"><fmt:message key="profile.change" /></button>				
 				</form>
 			</div>   
         <!--------------- End password form --------------->			

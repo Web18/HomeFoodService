@@ -8,8 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="//Mac/Home/Desktop/java-json%5b1%5d.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="//Mac/Home/Downloads/javax.mail-1.6.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

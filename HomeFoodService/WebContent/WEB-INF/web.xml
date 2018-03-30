@@ -24,14 +24,22 @@
     <servlet-name>register</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>checkout</servlet-name>
-    <url-pattern>/checkout</url-pattern>
-  </servlet-mapping>
   <servlet>
     <servlet-name>checkout</servlet-name>
     <servlet-class>com.homefood.servlets.CheckoutServlet</servlet-class>
+  </servlet> 
+    <servlet-mapping>
+    <servlet-name>checkout</servlet-name>
+    <url-pattern>/checkout</url-pattern>
+  </servlet-mapping> 
+  <servlet>
+    <servlet-name>payment</servlet-name>
+    <servlet-class>com.homefood.servlets.PaymentServlet</servlet-class>
   </servlet>
+    <servlet-mapping>
+    <servlet-name>payment</servlet-name>
+    <url-pattern>/payment</url-pattern>
+  </servlet-mapping> 
   <servlet-mapping>
     <servlet-name>profileChange</servlet-name>
     <url-pattern>/profileChange</url-pattern>
@@ -56,13 +64,9 @@
     <servlet-name>changeAddress</servlet-name>
     <servlet-class>com.homefood.servlets.ProfileServlet</servlet-class>
   </servlet>
-  <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
   
   
   <display-name>EmailSendingWebApp</display-name>
- 
     <!-- SMTP settings -->
     <context-param>
         <param-name>host</param-name>
@@ -71,20 +75,21 @@
  
     <context-param>
         <param-name>port</param-name>
-        <param-value>587</param-value>
+        <param-value>465</param-value>
     </context-param>
  
     <context-param>
         <param-name>user</param-name>
-        <param-value>homefood.info@gmail.com</param-value>
+        <param-value>homefood.contact@gmail.com</param-value>
     </context-param>
  
     <context-param>
         <param-name>pass</param-name>
         <param-value>Doublehan</param-value>
     </context-param>
- 
-    <welcome-file-list>
-        <welcome-file>contact.jsp</welcome-file>
-    </welcome-file-list>
+ <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+
 </web-app>

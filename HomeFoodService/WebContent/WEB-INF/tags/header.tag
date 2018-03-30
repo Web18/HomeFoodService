@@ -26,6 +26,8 @@
 				<li><a href="menu.jsp"><font color="white"><b><fmt:message key="index.menu" /></b></font></a></li>				
 				<li><a href="about.jsp"><font color="white"><b><fmt:message key="index.about" /></b></font></a></li>
 				<li><a href="contact.jsp"><font color="white"><b><fmt:message key="index.contact" /></b></font></a></li>
+				<li><a href="admin.jsp"><font color="white">Admin</b></font></a></li>
+				
 				<% if (session.getAttribute("id") != null) { %>
 					<li>
 						<a href="profile.jsp">
@@ -34,7 +36,10 @@
 						</a>
 					</li>
 					<li>
-						<a href="logout"><font color="white"><b><fmt:message key="index.logout" /></b></font></a>
+						<a href="logout"><font color="white"><b><fmt:message key="index.logout" /></b></font></a>					
+					</li>
+					<li>
+						<a href="myOrders.jsp"><font color="white"><b><fmt:message key="index.myorders" /></b></font></a>
 					</li>
 							
 					<% } else {	%>

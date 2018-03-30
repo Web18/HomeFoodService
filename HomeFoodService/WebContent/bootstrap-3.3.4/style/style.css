@@ -99,6 +99,12 @@ body {
     border: 1px solid #ccc;
     border-top: none;
 }
+.stage-box {margin: 10px 0px;}
+.stage { margin: 0 18px; text-align: center; font-weight: bold; height: 100px; line-height: 80px; background-color: #EEE; border-radius: 15px; padding: 10px; }
+.stage-prev { color: #666; }
+.stage-active { background-color: yellow; }
+.stage-next { color: #DDD; }
+
 
 
 

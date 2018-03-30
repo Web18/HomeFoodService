@@ -35,6 +35,11 @@ public class ProfileServlet extends HttpServlet {
 	        byte[] salt = null;
 	        
 			String pwd1 = request.getParameter("password");
+			String pwd2 = request.getParameter("password_again");
+			
+			System.out.println("The first password is: "+ pwd1);
+			System.out.println("The second password is: "+ pwd2);
+
 			try {
 				salt = pw.generateSalt();
 				encryptedPass = pw.getEncryptedPassword(pwd1, salt);

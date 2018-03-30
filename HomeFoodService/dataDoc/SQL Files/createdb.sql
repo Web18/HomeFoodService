@@ -2,40 +2,6 @@ DROP DATABASE  IF EXISTS `home_food_service` ;
 CREATE DATABASE `home_food_service`  DEFAULT CHARACTER SET utf8 ;
 USE `home_food_service`;
 SET NAMES utf8 ;
---
--- Table structure for table `address`
---
-CREATE TABLE `address` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `alias` varchar(45) DEFAULT NULL,
-  `address1` varchar(100) NOT NULL,
-  `address2` varchar(100) DEFAULT NULL,
-  `city` varchar(100) NOT NULL,
-  `province` varchar(100) NOT NULL,
-  `postal_code` varchar(100) NOT NULL,
-  `phone` varchar(45) NOT NULL,
-  `buzzer_number` varchar(45) DEFAULT NULL,
-  `customer_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-);
-
---
--- Table structure for table `category`
---
-
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `name_fr` varchar(100) NOT NULL,
-  `image` varchar(100),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `CateogoryID_UNIQUE` (`id`)
-);
-
---
--- Table structure for table `customer`
---
 
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49,9 +15,6 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `CustomerID_UNIQUE` (`id`)
 );
---
--- Table structure for table `employee`
---
 
 CREATE TABLE `employee` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -61,12 +24,66 @@ CREATE TABLE `employee` (
   `email` varchar(100) DEFAULT NULL,
   `job_title` varchar(100) NOT NULL,
   `role` varchar(100) NOT NULL,
+  `password` blob NOT NULL,
+  `salt` blob NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 );
---
--- Table structure for table `item`
---
+
+
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `name_fr` varchar(100) NOT NULL,
+  `image` varchar(100),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `CateogoryID_UNIQUE` (`id`)
+);
+
+CREATE TABLE `size` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `name_fr` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `SizeID_UNIQUE` (`id`)
+);
+
+CREATE TABLE `stage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(50) NOT NULL,
+  `name_fr` char(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+);
+
+CREATE TABLE `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `service_type` varchar(25) NOT NULL,
+  `employee_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_service_employee_id`
+    FOREIGN KEY (`employee_id`)
+    REFERENCES `employee` (`id`),
+  UNIQUE KEY `CustomerID_UNIQUE` (`id`)
+);
+
+CREATE TABLE `address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alias` varchar(45) DEFAULT NULL,
+  `address1` varchar(100) NOT NULL,
+  `address2` varchar(100) DEFAULT NULL,
+  `city` varchar(100) NOT NULL,
+  `province` varchar(100) NOT NULL,
+  `postal_code` varchar(100) NOT NULL,
+  `phone` varchar(45) NOT NULL,
+  `buzzer_number` varchar(45) DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_address_customer_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `customer` (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+);
 
 CREATE TABLE `item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -80,12 +97,14 @@ CREATE TABLE `item` (
   `description_fr` varchar(500) DEFAULT NULL,
   `image` varchar(100),
   PRIMARY KEY (`id`),
+  CONSTRAINT `fk_category_id`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `category` (`id`),
+  CONSTRAINT `fk_item_size_id`
+    FOREIGN KEY (`size_id`)
+    REFERENCES `size` (`id`),
   UNIQUE KEY `ItemID_UNIQUE` (`id`)
 );
-
---
--- Table structure for table `order`
---
 
 CREATE TABLE `order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -99,15 +118,20 @@ CREATE TABLE `order` (
   `payment_method` varchar(45) NOT NULL,
   `delivery_address_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `cook_id` int(11) DEFAULT NULL,
-  `delivery_id` int(11) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
   `stage_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  CONSTRAINT `fk_order_stage_id`
+    FOREIGN KEY (`stage_id`)
+    REFERENCES `stage` (`id`),
+  CONSTRAINT `fk_order_customer_id`
+    FOREIGN KEY (`customer_id`)
+    REFERENCES `customer` (`id`),
+  CONSTRAINT `fk_order_Service_id`
+    FOREIGN KEY (`service_id`)
+    REFERENCES `service` (`id`),
   UNIQUE KEY `OrderID_UNIQUE` (`id`)
 );
---
--- Table structure for table `order_item`
---
 
 CREATE TABLE `order_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -115,36 +139,18 @@ CREATE TABLE `order_item` (
   `item_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `size`
---
-
-CREATE TABLE `size` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `name_fr` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `SizeID_UNIQUE` (`id`)
-);
-
---
--- Table structure for table `stage`
---
-
-CREATE TABLE `stage` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` char(50) NOT NULL,
-  `name_fr` char(50) NOT NULL,
-  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_order_item_order_id`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `order` (`id`),
+  CONSTRAINT `fk_order_item_item_id`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `item` (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 );
+
 --
 -- Temporary table structure for view `view_en`
 --
-
 CREATE ALGORITHM=UNDEFINED 
 DEFINER=`root`@`localhost` SQL SECURITY DEFINER 
 VIEW `view_en` AS 

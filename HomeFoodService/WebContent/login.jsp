@@ -60,7 +60,7 @@
 							name="password" class="form-control" id="password" placeholder="<fmt:message key="register.password.placeholder" />">
 					</div>
 					<input type="hidden" name="origin" value="login">
-					<button style="margin-left:auto;margin-right:auto;display:block;margin-top:0%;margin-bottom:0%" type="submit" class="btn btn-default">
+					<button style="margin-left:auto;margin-right:auto;display:block;margin-top:0%;margin-bottom:0%" type="submit" class="btn btn-warning">
 						<fmt:message key="login.button" />
 					</button>
 				</form>
